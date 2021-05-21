@@ -1,7 +1,7 @@
 
 /**
  * ABSTRACT PLUGIN TYPE DEFINITIONS
- * 
+ *
  * @typedef {object} MetricOption
  * @property {string} name              The name of the metric
  * @property {string} pattern           Filter patter doc (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
@@ -12,17 +12,17 @@
 
 /**
  * AWS TYPE DEFINITIONS
- * 
+ *
  * @typedef {object} AWSMetricFilterResourceProperty
  * @property {string} FilterPattern
  * @property {string} LogGroupName
- * @property {AWSMetricFilterResourceMetricTransformation[]} MetricTransformations 
- * 
+ * @property {AWSMetricFilterResourceMetricTransformation[]} MetricTransformations
+ *
  * @typedef {object} AWSMetricFilterResourceMetricTransformation
  * @property {string} MetricValue
  * @property {string} MetricNamespace
  * @property {string} MetricName
- * 
+ *
  * @typedef {object} AWSMetricFilterResource
  * @property {string} Type
  * @property {AWSMetricFilterResourceProperty} Properties
@@ -32,12 +32,12 @@
 /**
  * This plugin creates "AWS:Log:MetricFilter" resources using the `MetricOption` definition
  * under the serverless.yml location `custom.metrics`.
- * 
+ *
  * By default the plugin applies the metric resources to all functions, except
  * specific function-names are provided (`MetricOptions.functions`).
- * 
+ *
  * OPTION EXAMPLE:
- * 
+ *
  * ```
  * custom:
  *   metrics:
@@ -101,7 +101,7 @@ class MetricPlugin {
     }
 
     /**
-     * @param {string} functionName 
+     * @param {string} functionName
      * @returns {{functionName: string, resources: AWSMetricFilterResource[]}}
      */
     createMetricFilterResources(functionName) {
@@ -120,9 +120,9 @@ class MetricPlugin {
 
     /**
      * AWS compatible metric resource creation.
-     * 
+     *
      * @param {string} functionName
-     * @param {MetricOption} metricOptions 
+     * @param {MetricOption} metricOptions
      * @returns {AWSMetricFilterResource}
      */
     createAWSMetricResource(functionName, metricOptions) {
@@ -155,8 +155,8 @@ class MetricPlugin {
 
     /**
      * Register a aws resource OR override.
-     * 
-     * @param {string} name 
+     *
+     * @param {string} name
      * @param {AWSMetricFilterResource} resource
      */
     registerResource(name, resource) {
