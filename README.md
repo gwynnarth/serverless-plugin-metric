@@ -39,6 +39,7 @@ custom:
 /** 
  * @typedef {object} MetricOption
  * @property {string} name              The name of the metric
+ * @property {boolean} combined         Should all functions publish to one metric instead of unique per-function ones? (default: false)
  * @property {string} pattern           Filter patter doc (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
  * @property {string[]} [functions]     Default: ALL
  * @property {string} [namespace]       Override dynamic generated namespace (default: CustomMetrics/<serviceName>)

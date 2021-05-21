@@ -4,6 +4,7 @@
  *
  * @typedef {object} MetricOption
  * @property {string} name              The name of the metric
+ * @property {boolean} combined         Should all functions publish to one metric instead of unique per-function ones? (default: false)
  * @property {string} pattern           Filter patter doc (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
  * @property {string[]} [functions]     Default: ALL
  * @property {string} [namespace]       Override dynamic generated namespace (default: CustomMetrics/<serviceName>)
@@ -126,7 +127,7 @@ class MetricPlugin {
      * @returns {AWSMetricFilterResource}
      */
     createAWSMetricResource(functionName, metricOptions) {
-        const { name, namespace, pattern, value = '1' } = metricOptions;
+        const { name, combined, namespace, pattern, value = '1' } = metricOptions;
         const stage = this.provider.getStage();
         const logGroupName = this.provider.naming.getLogGroupName(this.serverless.service.getFunction(functionName).name);
         const dynamicNamespace = `${this.service}/${stage}`;
@@ -143,7 +144,7 @@ class MetricPlugin {
                 LogGroupName: logGroupName,
                 MetricTransformations: [
                     {
-                        MetricName: `${functionName}-${name}`,
+                        MetricName: combined ? name : `${functionName}-${name}`,
                         MetricNamespace: namespace || dynamicNamespace,
                         MetricValue: value
                     }
